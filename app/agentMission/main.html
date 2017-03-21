@@ -1,0 +1,25 @@
+<div class="missions-board">
+    <div class="title"> FYI most isolated agents were in: {{isoCountry}}</div>
+    <div ng-if="!closestLocation" ng-hide="closestLocation">Geo locations are being loaded, agents missions board will
+        appear in few seconds!
+    </div>
+    <div class="loader" ng-if="!closestLocation" ng-hide="closestLocation"></div>
+    <div ng-if="closestLocation" ng-show="closestLocation">
+        <table>
+            <tr>
+                <th>Agent ID</th>
+                <th>Country</th>
+                <th>Address</th>
+                <th>Date</th>
+            </tr>
+            <tr ng-repeat="member in agents | orderBy:'stamp'"
+                ng-class="{'closest': (member.stamp == closestLocation), 'farthest': (member.stamp == farthestLocation)}">
+                <td>{{ member.agent }}</td>
+                <td>{{ member.country }}</td>
+                <td>{{ member.address }}</td>
+                <td>{{ member.date }}</td>
+            </tr>
+        </table>
+        <div class="table-footer"> {{agents.length}} missions</div>
+    </div>
+</div>
