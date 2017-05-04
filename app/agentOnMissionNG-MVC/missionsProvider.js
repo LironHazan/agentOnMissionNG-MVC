@@ -4,7 +4,7 @@
 angular.module('agentMission').factory("missionsProvider", function($q, Consts){
     return {
         get: function(){
-            return $q.when(Consts.HOME_BASE);
+            return $q.when(Consts.MISSIONS_INPUT);
         }
     };
 });

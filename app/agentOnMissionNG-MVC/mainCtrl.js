@@ -4,15 +4,15 @@ angular.module('agentMission')
   .controller('mainCtrl', function ($scope, missions, mainService, Consts) {
 
       // show agents sorted by stamp
-      $scope.agents = mainService.addTimeStampByDate(Consts.MISSIONS_INPUT);
+      $scope.agents = mainService.addTimeStampByDate(missions);
 
-      $scope.isoCountry = mainService.findIsolatedCountry(Consts.MISSIONS_INPUT);
+      $scope.isoCountry = mainService.findIsolatedCountry(missions);
 
-      var homeBase = missions; // the static homebase address
+      var homeBase = Consts.HOME_BASE; // the static homebase address
 
       mainService.getCoordinates(homeBase)
           .then(function(baseLocation){
-              mainService.fetchInputsDistance(baseLocation, Consts.MISSIONS_INPUT)
+              mainService.fetchInputsDistance(baseLocation, missions)
                   .then(function (values) {
                       var distancesCompareHomebase = [].concat(values);
                       console.log(distancesCompareHomebase); // the array was not sort
@@ -43,15 +43,5 @@ angular.module('agentMission')
           var autoCompleteResult = matchAdress(input);
           $scope.result = autoCompleteResult;
       };
-
-
-      var agents = Consts.MISSIONS_INPUT.map(function(item) {
-          return item.agent;
-      });
-
-      var total = agents.reduce(function(prev, curr) {
-
-          return prev + curr;
-      });
 
   });
