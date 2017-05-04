@@ -7,5 +7,5 @@
     "underscore": "~1.8.3"
   },
   "appPath": "app",
-  "moduleName": "agentSecretTask"
+  "moduleName": "agentMission"
 }

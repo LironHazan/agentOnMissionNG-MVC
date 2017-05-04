@@ -3,7 +3,7 @@
 angular.module('agentMission')
     .service('mainService', function (_, $q) {
         var _this = this; // had to use _this when inside a promise
-
+            // 2 map + reduce
         _this.findIsolatedCountry = function(input){
             var mapCountryToAgent = {}; // {agent : [countryA, countryB]}
             var mapIsoAgentToCountry = {}; // { country: [iso-agentA, iso-agentB]}
@@ -29,10 +29,13 @@ angular.module('agentMission')
                 }
             }
             // get the country who has the most isolated agents
-            var isoCountry = _.max(Object.keys(mapIsoAgentToCountry), function (prop) { return mapIsoAgentToCountry[prop].length; });
+            var isoCountry = _.max(Object.keys(mapIsoAgentToCountry), function (prop) {
+                return mapIsoAgentToCountry[prop].length;
+            });
             return isoCountry;
         };
 
+        // async call to google api for getting coordinates of an address
         _this.getCoordinates = function (address) {
             return $q(function (resolve, reject) {
                 var geocoder = new google.maps.Geocoder();
@@ -49,19 +52,20 @@ angular.module('agentMission')
 
         };
 
+        // async call for getting distance between 2 places,
+        // should do: _this.getCoordinates(baseLocation) once! cause I have the base location
+
         _this.getDistanceFromBase = function (baseLocation, destLocation) {
-            return $q.all([_this.getCoordinates(baseLocation), _this.getCoordinates(destLocation)])
-                .then(function (values) {
-                    console.log(values);
-                    console.log(google.maps.geometry.spherical.computeDistanceBetween(values[0], values[1]));
-                    return google.maps.geometry.spherical.computeDistanceBetween(values[0], values[1]);
+            return _this.getCoordinates(destLocation)
+                .then(function (location) {
+                    return google.maps.geometry.spherical.computeDistanceBetween(location, baseLocation);
                 });
         };
 
-        _this.fetchInputsDistance = function (homeBase, missionInputs){
+        _this.fetchInputsDistance = function (baseLocation, missionInputs){
             var promises = [];
             missionInputs.forEach(function(agent){
-                promises.push(_this.getDistanceFromBase(homeBase, agent.address))
+                promises.push(_this.getDistanceFromBase(baseLocation, agent.address))
             });
             return $q.all(promises);
         };
@@ -72,6 +76,5 @@ angular.module('agentMission')
                 item.stamp = new Date(item.date).getTime()
             });
             return inputs;
-        }
-
+        };
     });

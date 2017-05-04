@@ -1,9 +1,11 @@
 <div class="missions-board">
     <div class="title"> FYI most isolated agents were in: {{isoCountry}}</div>
-    <div ng-if="!closestLocation" ng-hide="closestLocation">Geo locations are being loaded, agents missions board will
-        appear in few seconds!
-    </div>
-    <div class="loader" ng-if="!closestLocation" ng-hide="closestLocation"></div>
+   <div> <input type="text" ng-change="changeInput()" ng-model="input"> <div>{{result}}</div>
+   </div>
+    <!--<div ng-if="!closestLocation" ng-hide="closestLocation">Geo locations are being loaded, agents missions board will-->
+        <!--appear in few seconds!-->
+    <!--</div>-->
+    <!--<div class="loader" ng-if="!closestLocation" ng-hide="closestLocation"></div>-->
     <div ng-if="closestLocation" ng-show="closestLocation">
         <table>
             <tr>
