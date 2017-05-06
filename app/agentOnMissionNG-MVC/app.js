@@ -7,8 +7,8 @@ angular
     .config(function ($routeProvider) {
         $routeProvider
             .when('/', {
-                templateUrl: 'agentMission/main.html',
-                controller: 'mainCtrl', // no routes needed thus didn't use ui-router
+                templateUrl: 'agentOnMissionNG-MVC/main.html',
+                controller: 'mainCtrl',
                 resolve: {
                     missions: function (missionsProvider) {
                         return missionsProvider.get();
