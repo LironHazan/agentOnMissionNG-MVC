@@ -5,6 +5,8 @@ angular.module('agentMission')
 
       // show agents sorted by stamp
       $scope.agents = mainService.addTimeStampByDate(missions);
+      $scope.missionsTree = mainService.buildTree(missions);
+      console.log($scope.missionsTree)
 
       $scope.isoCountry = mainService.findIsolatedCountry(missions);
 

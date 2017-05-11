@@ -36,6 +36,20 @@ angular.module('agentMission')
            return isoCountry;
         };
 
+        _this.buildTree = function (list) {
+            var tree = list.map(function(item){
+              if(item.parent){
+                 var parentObj = list.filter( _item => item.parent === _item.agent)[0];
+                 parentObj.children = parentObj.children || [];
+                 parentObj.children.push(item);
+                }
+                return item;
+            }).filter(function(item){
+                return item.parent === null;
+            });
+            return tree;
+        };
+
         // async call to google api for getting coordinates of an address
         _this.getCoordinates = function (address) {
             return $q(function (resolve, reject) {

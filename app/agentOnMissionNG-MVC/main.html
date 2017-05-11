@@ -24,4 +24,7 @@
         </table>
         <div class="table-footer"> {{agents.length}} missions</div>
     </div>
+    <ul>
+        <li ng-repeat="mission in missionsTree" > {{ mission.children }} </li>
+    </ul>
 </div>
