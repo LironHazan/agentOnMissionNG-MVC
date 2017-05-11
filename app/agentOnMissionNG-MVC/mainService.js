@@ -67,9 +67,7 @@ angular.module('agentMission')
 
         };
 
-        // async call for getting distance between 2 places,
-        // should do: _this.getCoordinates(baseLocation) once! cause I have the base location
-
+        // async call for getting distance between 2 places
         _this.getDistanceFromBase = function (baseLocation, destLocation) {
             return _this.getCoordinates(destLocation)
                 .then(function (location) {
