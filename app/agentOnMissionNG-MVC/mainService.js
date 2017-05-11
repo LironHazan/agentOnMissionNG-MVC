@@ -5,7 +5,7 @@ angular.module('agentMission')
         var _this = this; // had to use _this when inside a promise
             // 2 map + reduce
         _this.findIsolatedCountry = function (input){
-            var mapCountryToAgent = {}; // {agent : [countryA, countryB]}
+           var mapCountryToAgent = {}; // {agent : [countryA, countryB]}
            var mapIsoAgentToCountry = {}; // { country: [iso-agentA, iso-agentB]}
 
             input.forEach(function (item) {
