@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('agentMission')
-    .factory('missionsAction', function (_, $q) {
+    .factory('missionsAction', function (_, $q, mainService) {
 
         function findIsolatedCountry (input){
-        return function (dispatch) {
+            return function (dispatch) {
                    var mapCountryToAgent = {}; // {agent : [countryA, countryB]}
                    var mapIsoAgentToCountry = {}; // { country: [iso-agentA, iso-agentB]}
 
@@ -40,11 +40,55 @@ angular.module('agentMission')
                         isoCountry: isoCountry
                          }
                    });
-                   //return isoCountry;
                 };
         }
 
+        function buildTree (list) {
+          return function (dispatch) {
+            var tree = list.map(function(item){
+                if(item.parent){
+                 var parentObj = list.filter( _item => item.parent === _item.agent)[0];
+                     parentObj.children = parentObj.children || [];
+                     parentObj.children.push(item);
+                   }
+                  return item;
+                }).filter(function(item){
+                  return item.parent === null;
+                });
+                dispatch({
+                 type: types.LOAD_TREE,
+                 payload: { tree: tree }
+                 });
+            }
+        };
+
+        function getCoordinatesDistance (homeBase, missions) {
+            return function (dispatch) {
+                mainService.getCoordinates(homeBase)
+                 .then(function(baseLocation){
+                   mainService.fetchInputsDistance(baseLocation, missions)
+                   .then(function (values) {
+                    var distancesCompareHomebase = [].concat(values);
+                    var closestIndex = distancesCompareHomebase.indexOf(_.min(distancesCompareHomebase));
+                    var farthestIndex = distancesCompareHomebase.indexOf(_.max(distancesCompareHomebase));
+                    var closestLocation = missions[closestIndex].stamp;
+                    var farthestLocation = missions[farthestIndex].stamp;
+                    dispatch({
+                      type: types.GET_DISTANCE,
+                      payload: { closestLocation: closestLocation, farthestLocation: farthestLocation }
+                    });
+                 }).catch(function (err) {
+                    console.log(err);
+                 });
+              }).catch(function (err) {
+                 console.log(err);
+                    });
+            }
+        }
+
         return {
-             findIsolatedCountry
+             findIsolatedCountry,
+             buildTree,
+             getCoordinatesDistance
            }
     });

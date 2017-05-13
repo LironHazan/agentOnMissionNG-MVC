@@ -3,7 +3,10 @@
 
 const missionsState = {
     missions: [],
-    isoCountry: ''
+    isoCountry: '',
+    tree: [],
+    closestLocation: '',
+    farthestLocation: ''
 };
 
 function missionsReducer(state = missionsState, action = {}) {
@@ -15,6 +18,15 @@ function missionsReducer(state = missionsState, action = {}) {
         case types.INIT_ISO_COUNTRY:
              return angular.extend({}, state, {
              isoCountry: action.payload.isoCountry
+             });
+        case types.LOAD_TREE:
+             return angular.extend({}, state, {
+             tree: action.payload.tree
+             });
+         case types.GET_DISTANCE:
+             return angular.extend({}, state, {
+              closestLocation: action.payload.closestLocation,
+              farthestLocation: action.payload.farthestLocation
              });
         default:
             return angular.extend({}, state, {});

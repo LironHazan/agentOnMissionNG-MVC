@@ -3,52 +3,6 @@
 angular.module('agentMission')
     .service('mainService', function (_, $q) {
         var _this = this; // had to use _this when inside a promise
-            // 2 map + reduce
-//        _this.findIsolatedCountry = function (input){
-//           var mapCountryToAgent = {}; // {agent : [countryA, countryB]}
-//           var mapIsoAgentToCountry = {}; // { country: [iso-agentA, iso-agentB]}
-//
-//            input.forEach(function (item) {
-//                // map the agents to the countries they were at
-//                if (!mapCountryToAgent[item.agent]) {
-//                    mapCountryToAgent[item.agent] = [];
-//                }
-//                mapCountryToAgent[item.agent].push(item.country);
-//            });
-//
-//         //  keep only isolated agents - agents who has just one country
-//            for (var agent in mapCountryToAgent) {
-//                if(mapCountryToAgent[agent].length > 1){
-//                    delete mapCountryToAgent[agent]; // remove agents which aren't isolated
-//                }
-//                else {
-//                    var country = mapCountryToAgent[agent][0];
-//                    if (!mapIsoAgentToCountry[country]) { // start fill in the country : agents[] map
-//                        mapIsoAgentToCountry[country] = [];
-//                    }
-//                    mapIsoAgentToCountry[country].push(agent);
-//                }
-//            }
-//         //  get the country who has the most isolated agents
-//            var isoCountry = _.max(Object.keys(mapIsoAgentToCountry), function (prop) {
-//                return mapIsoAgentToCountry[prop].length;
-//            });
-//           return isoCountry;
-//        };
-
-        _this.buildTree = function (list) {
-            var tree = list.map(function(item){
-              if(item.parent){
-                 var parentObj = list.filter( _item => item.parent === _item.agent)[0];
-                 parentObj.children = parentObj.children || [];
-                 parentObj.children.push(item);
-                }
-                return item;
-            }).filter(function(item){
-                return item.parent === null;
-            });
-            return tree;
-        };
 
         // async call to google api for getting coordinates of an address
         _this.getCoordinates = function (address) {
@@ -85,9 +39,9 @@ angular.module('agentMission')
 
         // adding the timestamp to each agent is better for filtering and for comparison
         _this.addTimeStampByDate = function (inputs){
-            inputs.forEach(function(item){
-                item.stamp = new Date(item.date).getTime()
+            return inputs.map((item) => {
+                item.stamp = new Date(item.date).getTime();
+                return item;
             });
-            return inputs;
         };
     });
