@@ -1,10 +1,13 @@
 'use strict';
+/*global rootReducer */
+/*global ReduxThunk */
 
 angular
     .module('agentMission', [
-        'ngRoute'
+        'ngRoute',
+        'ngRedux'
     ])
-    .config(function ($routeProvider) {
+    .config(function ($routeProvider, $ngReduxProvider) {
         $routeProvider
             .when('/', {
                 templateUrl: 'agentOnMissionNG-MVC/main.html',
@@ -15,6 +18,8 @@ angular
                     }
                 }
             });
+        //create ng-redux store with root reducer from ./Reducers
+        $ngReduxProvider.createStoreWith(rootReducer, [ReduxThunk.default]);
     }).constant('_',
     window._ // had to load underscore globally
 );

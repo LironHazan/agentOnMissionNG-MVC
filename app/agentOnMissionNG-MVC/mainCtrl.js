@@ -1,14 +1,26 @@
 'use strict';
 
 angular.module('agentMission')
-  .controller('mainCtrl', function ($scope, missions, mainService, Consts) {
+  .controller('mainCtrl', function ($scope, missions, mainService, Consts, $ngRedux, missionsAction) {
 
       // show agents sorted by stamp
       $scope.agents = mainService.addTimeStampByDate(missions);
       $scope.missionsTree = mainService.buildTree(missions);
       console.log($scope.missionsTree)
 
-      $scope.isoCountry = mainService.findIsolatedCountry(missions);
+    var mapStateToScope = function(state) {
+       return {
+          isoCountry: state.missionsReducer.isoCountry
+       };
+    }
+
+    var unsubscribe = $ngRedux.connect(mapStateToScope, {})($scope);
+
+    $scope.$on('$destroy', function() {
+        unsubscribe();
+    });
+
+    $ngRedux.dispatch(missionsAction.findIsolatedCountry(missions));
 
       var homeBase = Consts.HOME_BASE; // the static homebase address
 

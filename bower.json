@@ -4,7 +4,10 @@
   "dependencies": {
     "angular": "^1.5.0",
     "angular-route": "^1.3.0",
-    "underscore": "~1.8.3"
+    "underscore": "~1.8.3",
+    "redux": "https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js",
+    "redux-thunk": "https://cdnjs.cloudflare.com/ajax/libs/redux-thunk/2.2.0/redux-thunk.min.js",
+    "ng-redux": "^3.3.0"
   },
   "appPath": "app",
   "moduleName": "agentMission"
