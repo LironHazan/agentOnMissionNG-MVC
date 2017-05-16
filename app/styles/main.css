@@ -1,6 +1,12 @@
 body{
   font-family: arial, sans-serif;
 }
+.line-chart{
+    width: 600px;
+    height: 400px;
+    display: flex;
+    margin-left: 600px;
+}
 .missions-board{
   padding: 5px;
 }

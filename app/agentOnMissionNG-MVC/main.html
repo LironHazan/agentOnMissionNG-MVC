@@ -28,3 +28,11 @@
         <li ng-repeat="mission in tree" > {{ mission.children }} </li>
     </ul>
 </div>
+
+<div class="line-chart">
+        <canvas id="line" class="chart chart-line" chart-data="data"
+                chart-labels="labels" chart-series="series" chart-options="options"
+                chart-dataset-override="datasetOverride" chart-click="onClick">
+        </canvas>
+</div>
+<!--<canvas id="myChart" width="400" height="400"></canvas>-->
