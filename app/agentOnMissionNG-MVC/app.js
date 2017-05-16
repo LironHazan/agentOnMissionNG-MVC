@@ -22,14 +22,19 @@ angular
         //create ng-redux store with root reducer from ./Reducers
         $ngReduxProvider.createStoreWith(rootReducer, [ReduxThunk.default]);
 
+           ChartJsProvider.setOptions({
+                        responsive: true,
+                        maiinAspectRatio: false,
+           });
+
         Chart.defaults.global.colors = [
           {
                  backgroundColor: 'transparent',
                  pointBackgroundColor: 'green',
                  pointHoverBackgroundColor: 'rgba(151,187,205,1)',
                  borderColor: 'rgba(0,0,0,0',
-                 pointBorderColor: '#fff',
-                 pointHoverBorderColor: 'rgba(151,187,205,1)'
+                 pointBorderColor: 'green',
+                 pointHoverBorderColor: 'rgba(151,187,205,1)',
                },
                 {
                            backgroundColor: 'transparent',
