@@ -5,7 +5,8 @@
 angular
     .module('agentMission', [
         'ngRoute',
-        'ngRedux'
+        'ngRedux',
+        'nvd3'
     ])
     .config(function ($routeProvider, $ngReduxProvider) {
         $routeProvider

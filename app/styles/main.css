@@ -1,6 +1,12 @@
 body{
   font-family: arial, sans-serif;
 }
+.nvd-line-chart{
+  width: 600px;
+  height: 300px;
+ // display: flex;
+  margin-left: 600px;
+}
 .missions-board{
   padding: 5px;
 }
