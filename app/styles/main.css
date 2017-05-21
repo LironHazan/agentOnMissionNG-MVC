@@ -1,10 +1,20 @@
 body{
   font-family: arial, sans-serif;
 }
+
+.nvd3 g.nv-groups path {
+    stroke-width: 2 !important;
+    stroke: orange;
+    fill: white;
+}
+
+.nvd3 g.nv-point-paths path {
+    pointer-events: all;
+}
+
 .nvd-line-chart{
   width: 600px;
   height: 300px;
- // display: flex;
   margin-left: 600px;
 }
 .missions-board{
