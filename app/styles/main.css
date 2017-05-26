@@ -2,10 +2,30 @@ body{
   font-family: arial, sans-serif;
 }
 
-.nvd3 g.nv-groups path {
-    stroke-width: 2 !important;
-    stroke: orange;
-    fill: white;
+
+.chart {
+
+}
+
+.main text {
+    font: 10px sans-serif;
+}
+
+.axis line, .axis path {
+    shape-rendering: crispEdges;
+    stroke: black;
+    fill: none;
+}
+
+circle {
+    fill: steelblue;
+}
+
+.tooltip {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
 }
 
 .nvd3 g.nv-point-paths path {

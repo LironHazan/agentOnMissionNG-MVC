@@ -44,70 +44,54 @@ angular.module('agentMission')
         unsubscribe();
     });
 
-//    $scope.data = sinAndCos();
-//    /*Random Data Generator */
-//    function sinAndCos() {
-//          var sin = [],sin2 = [],
-//              cos = [];
-//
-//          //Data is represented as an array of {x,y} pairs.
-//          for (var i = 0; i < 100; i++) {
-//              sin.push({x: i, y: Math.sin(i/10)});
-//              sin2.push({x: i, y: i % 10 == 5 ? null : Math.sin(i/10) *0.25 + 0.5});
-//              cos.push({x: i, y: .5 * Math.cos(i/10+ 2) + Math.random() / 10});
-//          }
-//
-//          //Line chart data should be sent as an array of series objects.
-//          return [
-//              {
-//                  values: sin,      //values - represents the array of {x,y} data points
-//                  key: 'Sine Wave', //key  - the name of the series.
-//                  color: '#ff7f0e',  //color - optional: choose your own line color.
-//                  strokeWidth: 2,
-//                  classed: 'dashed'
-//              },
-///*              {
-//                  values: cos,
-//                  key: 'Cosine Wave',
-//                  color: '#2ca02c'
-//              },*/
-//              {
-//                  values: sin2,
-//                  key: 'Another sine wave',
-//                  color: '#7777ff',
-//                  area: true      //area - set to true if you want this line to turn into a filled area chart.
-//              }
-//          ];
-//      }
+      $scope.data = generateData();
 
-      $scope.data = generateData(1, 4);
+      function generateData() {
+          var letters = 'ABC'.split(''); //['A', 'B', 'C'];
+          var years = ['2013', '2014', '2015'];
 
-        /* Random Data Generator (took from nvd3.org) */
-        function generateData(groups, points) {
-          var random = d3.random.normal();
-          var letters = ['A', 'B', 'C'];
-          var data = letters.map(function(text){
-            return {
-             key: 'Events',
-             event: text,
-             values: [],
-             color: 'orange',
-             size: 100,
-            }
-          })
-          for (let i = 0; i < groups; i++) {
+          var eventProps = {shape:'square', color: 'orange'};
+          var valuationProps = {shape:'circle', color: 'green'};
 
-            for (let j = 0; j < points; j++) {
-              data[i].values.push({
-                x: random(),
-                y: 0,
-                sym : "&#xf083",
-                shape: 'square',
-              });
-            }
-          }
+          var valuationEvents = [
+            {id: 1,
+             date: '2013',
+             event: {title: 'something', body: 'super!'},
+             valuation: {price: 99, securityType: 4}
+            },
+            {id: 2,
+             date: '2014',
+             event: {title: 'something',body: 'super!'},
+             valuation: {price: 120,securityType: 4}
+            },
+            {id: 1,
+            date: '2015',
+            event: { title: 'something',body: 'super!'},
+            valuation: {price: 45, securityType: 4}
+             },
+            {id: 1,
+              date: '2016',
+              event: {title: 'something',body: 'super!'},
+              valuation: {price: 67, securityType: 4}
+             }
+          ];
 
+          var valuationGraphData = valuationEvents.map(function(event){
+          var _event = {id: event.id, x: event.date, y: event.valuation.price, valuation: event.valuation, shape: valuationProps.shape};
+          return _event;
+          });
+
+          var eventsGraphData = valuationEvents.map(function(event){
+                var _event = {id: event.id, x: event.date, y: '0', event: event.event, shape: eventProps.shape  };
+            return _event;
+          });
+
+          var data = [{ key: 'Events', values: [], color: 'orange'},
+          { key: 'Price per share', values: [], color: 'green'}]; //{ key: 'Events', values: [], color: 'orange'};
+            data[0].values = eventsGraphData;
+            data[0].values.shift({id: 0, x: 0, y: '0', event: 0, shape: ''  });
+            data[1].values = valuationGraphData;
           return data;
         }
 
-  });
+});
